@@ -1,0 +1,79 @@
+<app-header-admin [title]="title"></app-header-admin>
+
+<ion-content *ngIf="!isLoading">
+  <!-- Mobile Version -->
+  <swiper class="swiper-container mobile">
+    <ng-template swiperSlide *ngFor="let line of sensors?.mobile">
+      <ion-row>
+        <ion-col [size]="10" [offset]="1" *ngFor="let item of line" (click)="goToItem(item)">
+          <ion-card [ngClass]="(!item?.range?.inRange || item?.online == 0 ) ? 'outOfRange' :''" *ngIf="item.ativo ==1">
+            <ion-card-header>
+              <ion-card-title class="page-title">Sensor: <br>
+                <small>{{item?.nome}}</small>
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content *ngIf="item?.online != 0; else offline">
+              <ion-row>
+                <ion-col size="6" *ngIf="item?.temp_ativo==1">
+                  <ngx-gauge [type]="gaugeOptions.type" [value]="item?.atual_temp" label="Temperatura"
+                    [append]="gaugeOptions?.temp" [thick]="gaugeOptions.thick" [cap]="gaugeOptions.cap"
+                    [size]="gaugeOptions.size.mobile">
+                  </ngx-gauge>
+                </ion-col>
+                <ion-col size="6" *ngIf="item?.umid_ativo==1">
+                  <ngx-gauge [type]="gaugeOptions.type" [value]="item?.atual_umid" label="Umidade"
+                    [append]="gaugeOptions?.umid" [thick]="gaugeOptions.thick" [cap]="gaugeOptions.cap"
+                    [size]="gaugeOptions.size.mobile">
+                  </ngx-gauge>
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+            <ng-template #offline>
+              <ion-card-content>Offline</ion-card-content>
+            </ng-template>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </swiper>
+  <!-- Mobile Version -->
+
+  <!-- Desktop Version -->
+  <swiper class="swiper-container desktop">
+    <ng-template swiperSlide *ngFor="let line of sensors?.desktop">
+      <ion-row>
+        <ion-col [size]="line.length>3?4:12" *ngFor="let item of line" (click)="goToItem(item)">
+          <ion-card [ngClass]="(!item?.range?.inRange || item?.online == 0 ) ? 'outOfRange' :''" *ngIf="item.ativo ==1">
+            <ion-card-header>
+              <ion-card-title>
+                <small>Sensor: </small><br>
+                {{item?.nome}}
+              </ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content *ngIf="item?.online != 0 ; else offline">
+              <ion-col size="6" *ngIf="item?.temp_ativo==1">
+                <ngx-gauge [type]="gaugeOptions.type" [value]="item?.atual_temp" label="Temperatura"
+                  [append]="gaugeOptions?.temp" [thick]="gaugeOptions.thick" [cap]="gaugeOptions.cap"
+                  [size]="gaugeOptions.size.desktop">
+                </ngx-gauge>
+              </ion-col>
+              <ion-col size="6" *ngIf="item?.umid_ativo==1">
+                <ngx-gauge [type]="gaugeOptions.type" [value]="item?.atual_umid" label="Umidade"
+                  [append]="gaugeOptions?.umid" [thick]="gaugeOptions.thick" [cap]="gaugeOptions.cap"
+                  [size]="gaugeOptions.size.desktop">
+                </ngx-gauge>
+              </ion-col>
+            </ion-card-content>
+            <ng-template #offline>
+              <ion-card-content id="offline">Offline</ion-card-content>
+            </ng-template>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ng-template>
+  </swiper>
+  <!-- Desktop Version -->
+
+</ion-content>

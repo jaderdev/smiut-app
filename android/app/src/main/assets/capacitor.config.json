@@ -1,0 +1,6 @@
+{
+	"appId": "com.eas.smiut",
+	"appName": "Smiut",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

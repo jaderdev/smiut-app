@@ -1,0 +1,75 @@
+<app-header-admin [title]="title"></app-header-admin>
+
+<ion-content>
+  <ion-grid>
+    <ion-list>
+      <form #formIntervalo="ngForm" (ngSubmit)="onSubmit(formIntervalo)" form="form">
+        <ion-item>
+          <ion-label>Data: </ion-label>
+          <ion-input type='date' name="data_fim" [(ngModel)]="todayDate" aria-describedby="date" ngModel required
+            autocomplete="off"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Sensores: </ion-label>
+          <ion-select placeholder="-" name="sensores" ngModel required>
+            <ion-select-option *ngFor="let item of sensores" value="{{item.id}}">
+              {{item.nome}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Intervalo: </ion-label>
+          <ion-select placeholder="Selecione um intervalo" name="intervalo" ngModel required>
+            <ion-select-option value="10">10 minutos</ion-select-option>
+            <ion-select-option value="30">30 minutos</ion-select-option>
+            <ion-select-option value="60">1 hora</ion-select-option>
+            <ion-select-option value="120">2 horas</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-button expand="full" type="submit">Pesquisar</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button expand="full" type="button" (click)="generatePDF(formIntervalo)">PDF</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-list>
+    <ion-list [hidden]="!showValues" class="text-center">
+      <ion-row>
+        <ion-col>
+          Resultado - Data:{{todayDate}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-label>Hora Início</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>Hora Fim</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>Média Temperatura ( {{gaugeOptions?.temp}} )</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>Média Umidade ( {{gaugeOptions?.umid}} )</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let item of items">
+        <ion-col>
+          <ion-label>{{item.date_init | date: 'HH:mm' }}</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>{{item.date_end | date: 'HH:mm' }}</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>{{item.media_valor_temperatura}}</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-label>{{item.media_valor_umidade}}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-list>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "Smiut",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

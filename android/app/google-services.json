@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "341323472271",
+    "project_id": "smiut-app",
+    "storage_bucket": "smiut-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341323472271:android:aee33c4be5b0138718fffa",
+        "android_client_info": {
+          "package_name": "com.eas.smiut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "341323472271-5je2kmlougndc5q5n16ljl74nfkjik1e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTrGGCeyi8P_iiLiL340E-yosAWyVoPTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "341323472271-5je2kmlougndc5q5n16ljl74nfkjik1e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,28 @@
+<ion-grid>
+  <!-- {{env.apiURL | json}} -->
+  <form #formLogin="ngForm" (ngSubmit)="onSubmitLogin(formLogin)">
+    <ion-row>
+      <ion-col size="8" offset="2">
+        <ion-img src="assets/icon/logo.png" alt="Smiut App" class="dark"> </ion-img>
+        <ion-img src="assets/icon/logo_black.png" alt="Smiut App" class="light"> </ion-img>
+        <p class="subtitle">
+          <small>Sistema de monitoramento inteligente <br> de umidade e temperatura</small>
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Usuário</ion-label>
+        <ion-input type='text' name="username" aria-describedby="username" ngModel required autocomplete="off">
+        </ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type='password' name="password" aria-describedby="password" ngModel required autocomplete="off">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+    <button class="btn-submit" [disabled]="formLogin.invalid" type="submit">Acessar</button>
+  </form>
+</ion-grid>

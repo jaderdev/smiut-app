@@ -1,0 +1,49 @@
+/* Without setting height the slides will take up the height of the slide's content */
+ion-slides {
+  height: 100%;
+}
+
+ngx-gauge canvas {
+  width: 100px !important;
+}
+
+.reading-label {
+  font-size: 10pt !important;
+}
+
+.reading-affix {
+  font-weight: initial !important;
+}
+
+.outOfRange {
+  background: red;
+  color: white;
+}
+
+.page-title {
+  font-size: 14pt;
+}
+.mobile {
+  ion-slide {
+    overflow-y: scroll;
+  }
+  ion-row {
+    height: 100%;
+    ion-card {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+  #offline {
+    height: 400px;
+  }
+}
+
+.desktop {
+  ion-slide {
+    width: 100% !important;
+  }
+  ion-row {
+    height: 100%;
+  }
+}

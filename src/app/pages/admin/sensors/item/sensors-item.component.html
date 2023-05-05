@@ -1,0 +1,126 @@
+<app-header-admin [showCloseButton]="true" [showMenuButton]="false" (btnCloseAction)="closeModal()"
+   *ngIf="isModal;else byUrl" [title]="item?.nome">
+</app-header-admin>
+
+<ng-template #byUrl>
+   <app-header-admin [title]="item?.nome" [showBackButton]="true" [defaultBackUrl]="'/admin/sensors/list'"
+      [showMenuButton]="false">
+   </app-header-admin>
+</ng-template>
+
+<ion-content class="text-center">
+   <section *ngIf="item?.ativo ==1">
+      <ion-grid>
+         <ion-row>
+            <ion-col size="12">
+               <h3>
+                  <span [style.color]="!item?.range?.temperatura ?'red' : ''" *ngIf="item?.temp_ativo==1">
+                     {{item?.atual_temp}} {{gaugeOptions?.temp}} </span>
+                  <span *ngIf="item?.temp_ativo ==1 && item?.umid_ativo==1">/</span>
+                  <span [style.color]="!item?.range?.umidade ? 'red' : ''" *ngIf="item?.umid_ativo==1">
+                     {{item?.atual_umid}} {{gaugeOptions?.umid}}
+                  </span>
+               </h3>
+               <p>às {{item?.date | date:'HH:mm' : 'UTC'}} de {{item?.date | date:'dd/MM/yyyy'}}</p>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+      <ion-grid>
+         <ion-row>
+            <ion-col size="6" *ngIf="item?.temp_ativo==1">
+               <p>Faixa de temperatura <br> ideal</p>
+               <p>
+                  {{item?.temp_maior_igual}} {{gaugeOptions?.temp}}
+                  /
+                  {{item?.temp_menor_igual}} {{gaugeOptions?.temp}}
+               </p>
+            </ion-col>
+            <ion-col size="6" *ngIf="item?.umid_ativo==1">
+               <p>Faixa de umidade <br> ideal</p>
+               <p>
+                  {{item?.umid_maior_igual}} {{gaugeOptions?.umid}}
+                  /
+                  {{item?.umid_menor_igual}} {{gaugeOptions?.umid}}
+               </p>
+            </ion-col>
+         </ion-row>
+
+         <ion-row>
+            <ion-col size="6" *ngIf="item?.temp_ativo==1">
+               <p>Temperatura Hoje: Min / Max</p>
+               <p>
+                  {{sensorsMinMax?.temp_min}} {{gaugeOptions?.temp}}
+                  /
+                  {{sensorsMinMax?.temp_max}} {{gaugeOptions?.temp}}
+               </p>
+            </ion-col>
+            <ion-col size="6" *ngIf="item?.umid_ativo==1">
+               <p>Umidade Hoje: Min / Max</p>
+               <p>
+                  {{sensorsMinMax?.umid_min}} {{gaugeOptions?.umid}}
+                  /
+                  {{sensorsMinMax?.umid_max}} {{gaugeOptions?.umid}}
+               </p>
+            </ion-col>
+         </ion-row>
+      </ion-grid>
+      <ion-grid>
+         <section *ngIf="qty>0;else semLeituras">
+            <ion-row>
+               <ion-col>
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                     <label class="btn btn-secondary active">
+                        <input type="radio" name="options" [(ngModel)]="showChart" [value]="true" checked> Gráfico
+                     </label>
+                     <label class="btn btn-secondary">
+                        <input type="radio" name="options" [(ngModel)]="showChart" [value]="false"> Listagem
+                     </label>
+                  </div>
+               </ion-col>
+            </ion-row>
+            <section [hidden]="showChart">
+               <ion-row>
+                  <ion-col>
+                     <h4>Última(s) {{qty}} leitura(s)</h4>
+                  </ion-col>
+               </ion-row>
+               <ion-row>
+                  <ion-col size="10" offset="1">
+                     <ion-item *ngFor="let subitem of sensorsPastData">
+                        <ion-label>{{subitem.date | date:'HH:mm' : 'UTC'}}
+                           <span *ngIf="subitem?.date.substr(0,10) != item?.date.substr(0,10)">
+                              - {{subitem.date | date:'dd/MM/YYYY' : 'UTC'}}
+                           </span>
+                        </ion-label>
+                        <ion-label slot="end" *ngIf="item?.temp_ativo==1">{{subitem?.atual_temp}} {{gaugeOptions?.temp}}
+                        </ion-label>
+                        <ion-label slot="end" *ngIf="item?.umid_ativo==1">{{subitem?.atual_umid}} {{gaugeOptions?.umid}}
+                        </ion-label>
+                     </ion-item>
+                  </ion-col>
+               </ion-row>
+            </section>
+            <section [hidden]="!showChart">
+               <ion-row>
+                  <ion-col>
+                     <h4>Gráfico do dia</h4>
+                  </ion-col>
+               </ion-row>
+               <ion-row>
+                  <ion-col size="10" offset="1">
+                     <canvas #lineTempCanvas class="canvas_chart"></canvas>
+                     <canvas #lineUmidCanvas class="canvas_chart"></canvas>
+                  </ion-col>
+               </ion-row>
+            </section>
+         </section>
+         <ng-template #semLeituras>
+            <section>
+               <ion-row>
+                  <ion-col>Não histórico de leituras</ion-col>
+               </ion-row>
+            </section>
+         </ng-template>
+      </ion-grid>
+   </section>
+</ion-content>
